@@ -50,7 +50,7 @@ namespace Io
 
     Client_socket_interface::Client_socket_interface(std::shared_ptr<Types::Robot_set> robot_set)
         : port_num(51717),
-          host_name("zzarch"),
+          host_name("192.168.123.150"),
           p_robot_set(robot_set) {
     }
 
