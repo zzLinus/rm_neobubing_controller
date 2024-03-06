@@ -11,7 +11,6 @@
 
 //
 #include "kb_ctrl.hpp"
-#include "robot.hpp"
 #include "types.hpp"
 
 namespace Ui
@@ -19,10 +18,10 @@ namespace Ui
     class raylib_ui
     {
        public:
-        using InputHandler = std::function<fp32(std::shared_ptr<Robot::Robot_set>, Types::Kb_event, fp32)>;
+        using InputHandler = std::function<fp32(std::shared_ptr<Types::Robot_set>, Types::Kb_event, fp32)>;
 
         raylib_ui() = delete;
-        raylib_ui(std::shared_ptr<Robot::Robot_set> p_robot_set, const InputHandler& event_handler);
+        raylib_ui(std::shared_ptr<Types::Robot_set> p_robot_set, const InputHandler& event_handler);
         ~raylib_ui();
         void init();  // WARN: some how, the raylib window allocation must hapen after the constructors;
         bool render();
@@ -32,10 +31,8 @@ namespace Ui
 
        private:
        public:
-        Types::debug_info_t* debug;
-
        private:
-        std::shared_ptr<Robot::Robot_set> p_robot_set;
+        std::shared_ptr<Types::Robot_set> p_robot_set;
         float max_speed = 2.5;
 
         fp32 cur_speed_x;

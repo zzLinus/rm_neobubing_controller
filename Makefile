@@ -19,7 +19,7 @@ LDFLAGS += -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 
 SRC = $(wildcard src/*.cc) $(wildcard src/**/*.cc)
 OBJ = $(addprefix $(BUILD_DIR)/, $(addsuffix .o, $(basename $(SRC))))
-BIN = serial.a
+BIN = controller
 
 .PHONY: all clean
 
@@ -32,7 +32,7 @@ run: all
 	$(BUILD_DIR)/$(BIN)
 
 $(BIN): $(OBJ)
-	ar rcs $(BUILD_DIR)/$(BIN) $^
+	$(CC) -o $(BUILD_DIR)/$(BIN) $(OBJ) $(CPPFLAGS) $(LDFLAGS)
 
 $(BUILD_DIR)/%.o: %.cc
 	@mkdir -p $(dir $@) && echo + CC $<

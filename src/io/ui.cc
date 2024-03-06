@@ -2,8 +2,7 @@
 
 namespace Ui
 {
-    raylib_ui::raylib_ui(std::shared_ptr<Robot::Robot_set> robot_set, const InputHandler &event_handler) {
-        debug = new Types::debug_info_t;
+    raylib_ui::raylib_ui(std::shared_ptr<Types::Robot_set> robot_set, const InputHandler &event_handler) {
         input_handler = event_handler;
         p_robot_set = robot_set;
         cur_speed_x = 0;
@@ -14,7 +13,6 @@ namespace Ui
     }
 
     raylib_ui::~raylib_ui() {
-        delete debug;
     }
 
     void raylib_ui::init() {
@@ -35,15 +33,15 @@ namespace Ui
         textColor.DrawText(" Hi Mom", 10, 10, 20);
 
         Vector2 dir_center = { 100, 130 };
-        DrawRectangle(dir_center.x, dir_center.y - 20, 20, 20, IsKeyDown(KEY_W) ? RED : LIGHTGRAY);
-        DrawRectangle(dir_center.x, dir_center.y + 20, 20, 20, IsKeyDown(KEY_R) ? RED : LIGHTGRAY);
-        DrawRectangle(dir_center.x - 20, dir_center.y, 20, 20, IsKeyDown(KEY_A) ? RED : LIGHTGRAY);
-        DrawRectangle(dir_center.x + 20, dir_center.y, 20, 20, IsKeyDown(KEY_S) ? RED : LIGHTGRAY);
+        DrawRectangle(dir_center.x, dir_center.y - 20, 20, 20, p_robot_set->vy_set > 0 ? RED : LIGHTGRAY);
+        DrawRectangle(dir_center.x, dir_center.y + 20, 20, 20, p_robot_set->vy_set < 0 ? RED : LIGHTGRAY);
+        DrawRectangle(dir_center.x - 20, dir_center.y, 20, 20, p_robot_set->vx_set > 0 ? RED : LIGHTGRAY);
+        DrawRectangle(dir_center.x + 20, dir_center.y, 20, 20, p_robot_set->vx_set < 0 ? RED : LIGHTGRAY);
     }
 
     inline void raylib_ui::draw_motor_speed() {
         // NOTE: Draw Slidebar
-        GuiSliderBar((Rectangle){ 600, 200, 120, 20 }, "Max speed", NULL, &max_speed, 0, 2.5);
+	GuiSliderBar((Rectangle){ 600, 200, 120, 20 }, "Max speed", NULL, &max_speed, 0, 2.5);
 
         Vector2 center = { 280, 130 };
         float vx_per = (p_robot_set->vx_set / 2.5) * 360;

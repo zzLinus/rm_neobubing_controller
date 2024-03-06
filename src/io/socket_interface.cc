@@ -2,44 +2,58 @@
 
 namespace Io
 {
-    void Socket_interface::task() {
-        listen(server_socket_fd, 5);
-        socklen_t clilen = sizeof(cli_addr);
-        client_socket_fd = accept(server_socket_fd, (struct sockaddr *)&cli_addr, &clilen);
-        if (client_socket_fd < 0) {
-            printf("ERROR on accept message\n");
+    void Client_socket_interface::task() {
+        sockfd = socket(AF_INET, SOCK_STREAM, 0);
+        if (sockfd < 0) {
+            printf("ERROR opening socket");
+        }
+        server = gethostbyname(host_name.c_str());
+        if (server == NULL) {
+            fprintf(stderr, "ERROR, no such host\n");
+            exit(0);
+        }
+        serv_addr.sin_family = AF_INET;
+        bcopy((char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
+        serv_addr.sin_port = htons(port_num);
+
+        if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+            printf("ERROR connecting");
         }
 
-        while (true) {
-            memset(buffer, 0, sizeof(buffer));
-            int n = read(client_socket_fd, buffer, 255);
+        int i = 0;
+        while (1) {
+            bzero(buffer, 256);
+            pack();
+            int n = write(sockfd, buffer, sizeof(Types::Robot_set));
+
+            if (n < 0) {
+                printf("ERROR writing to socket");
+            }
+
+            bzero(buffer, 256);
+            n = read(sockfd, buffer, 255);
+
             if (n < 0) {
                 printf("ERROR reading from socket");
             }
-            printf("Here is the message: %s\n", buffer);
-            n = write(client_socket_fd, "I got your message", 18);
-            if (n < 0)
-                printf("ERROR writing to socket");
+
+            printf("%d %s\n", i++, buffer);
         }
     }
 
-    Socket_interface::Socket_interface() : port_num(51717) {
-        server_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-        if (server_socket_fd < 0) {
-            printf("can't open socket\n");
-        }
-
-        serv_addr.sin_family = AF_INET;
-        serv_addr.sin_addr.s_addr = INADDR_ANY;
-        serv_addr.sin_port = htons(port_num);
-
-        if (bind(server_socket_fd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
-            printf("can't bind socket fd with port number");
+    inline void Client_socket_interface::pack() {
+        for (size_t i = 0; i < sizeof(Types::Robot_set); i++) {
+            //printf("%d\n", *((uint8_t *)p_robot_set.get() + i));
+            buffer[i] = *((uint8_t *)p_robot_set.get() + i);
         }
     }
 
-    Socket_interface::~Socket_interface() {
-        close(client_socket_fd);
-        close(server_socket_fd);
+    Client_socket_interface::Client_socket_interface(std::shared_ptr<Types::Robot_set> robot_set)
+        : port_num(51717),
+          host_name("zzarch"),
+          p_robot_set(robot_set) {
+    }
+
+    Client_socket_interface::~Client_socket_interface() {
     }
 }  // namespace Io

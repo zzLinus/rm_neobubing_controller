@@ -5,10 +5,10 @@
 
 namespace Io
 {
-    Io_handler::Io_handler(std::shared_ptr<Robot::Robot_set> robot_set) {
+    Io_handler::Io_handler(std::shared_ptr<Types::Robot_set> robot_set) {
         kb = new Input::Kb_ctrl();
         ui = new Ui::raylib_ui(
-            robot_set, [&](std::shared_ptr<Robot::Robot_set> p_robot_set, Types::Kb_event event, fp32 spdslider) {
+            robot_set, [&](std::shared_ptr<Types::Robot_set> p_robot_set, Types::Kb_event event, fp32 spdslider) {
                 return kb->event_handler(p_robot_set, event, spdslider);
             });
 

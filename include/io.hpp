@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "kb_ctrl.hpp"
-#include "robot.hpp"
 #include "socket_interface.hpp"
 #include "types.hpp"
 #include "ui.hpp"
@@ -14,7 +13,7 @@ namespace Io
     class Io_handler
     {
        public:
-        Io_handler(std::shared_ptr<Robot::Robot_set> robot_set);
+        Io_handler(std::shared_ptr<Types::Robot_set> robot_set);
         ~Io_handler();
         void task();
 

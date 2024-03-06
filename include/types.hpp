@@ -44,7 +44,18 @@ namespace Types
         /** other **/
         fp32 chassis_relative_angle = 0.f;
         Types::ROBOT_MODE mode = Types::ROBOT_MODE::ROBOT_NO_FORCE;
-    };
+    } __attribute__((packed));
 
+    enum Kb_event
+    {
+        UP = 0,
+        DOWN,
+        LEFT,
+        RIGHT,
+        SPIN_R,
+        SPIN_L,
+        STOP_X,
+        STOP_Y,
+    };
 }  // namespace Types
 #endif
