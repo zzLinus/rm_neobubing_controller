@@ -62,25 +62,25 @@ namespace Ui
         uint64_t now = std::chrono::duration_cast<std::chrono::milliseconds>(
                            std::chrono::high_resolution_clock::now().time_since_epoch())
                            .count();
-        if (IsKeyDown(KEY_W)) {
+        if (IsKeyDown(KEY_UP)) {
             cur_speed_y = input_handler(p_robot_set, Types::Kb_event::UP, max_speed);
             last = std::chrono::duration_cast<std::chrono::milliseconds>(
                        std::chrono::high_resolution_clock::now().time_since_epoch())
                        .count();
         }
-        if (IsKeyDown(KEY_A)) {
+        if (IsKeyDown(KEY_LEFT)) {
             cur_speed_x = input_handler(p_robot_set, Types::Kb_event::LEFT, max_speed);
             last_x = std::chrono::duration_cast<std::chrono::milliseconds>(
                          std::chrono::high_resolution_clock::now().time_since_epoch())
                          .count();
         }
-        if (IsKeyDown(KEY_S)) {
+        if (IsKeyDown(KEY_RIGHT)) {
             cur_speed_x = input_handler(p_robot_set, Types::Kb_event::RIGHT, max_speed);
             last_x = std::chrono::duration_cast<std::chrono::milliseconds>(
                          std::chrono::high_resolution_clock::now().time_since_epoch())
                          .count();
         }
-        if (IsKeyDown(KEY_R)) {
+        if (IsKeyDown(KEY_DOWN)) {
             cur_speed_y = input_handler(p_robot_set, Types::Kb_event::DOWN, max_speed);
             last = std::chrono::duration_cast<std::chrono::milliseconds>(
                        std::chrono::high_resolution_clock::now().time_since_epoch())

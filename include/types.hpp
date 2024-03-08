@@ -43,7 +43,7 @@ namespace Types
 
         /** other **/
         fp32 chassis_relative_angle = 0.f;
-        Types::ROBOT_MODE mode = Types::ROBOT_MODE::ROBOT_NO_FORCE;
+        uint8_t mode = Types::ROBOT_MODE::ROBOT_NOT_FOLLOW;
     } __attribute__((packed));
 
     enum Kb_event

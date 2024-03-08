@@ -11,7 +11,6 @@ namespace Io
             robot_set, [&](std::shared_ptr<Types::Robot_set> p_robot_set, Types::Kb_event event, fp32 spdslider) {
                 return kb->event_handler(p_robot_set, event, spdslider);
             });
-
         robot_set->mode = Types::ROBOT_NOT_FOLLOW;
     }
 
