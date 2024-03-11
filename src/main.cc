@@ -12,10 +12,12 @@ int main(int argc, char** argv) {
     Io::Io_handler io(robot_set);
 
     std::thread io_thread(&Io::Io_handler::task, &io);
-    std::thread socket_thread(&Io::Client_socket_interface::task, &socket_intrf);
-    std::thread socket_thread2(&Io::Client_socket_interface::task2, &socket_intrf);
+    std::thread socket_thread(&Io::Client_socket_interface::task, &socket_intrf);  // write
+    // std::thread socket_thread1(&Io::Client_socket_interface::task1, &socket_intrf); // write
+    std::thread socket_thread2(&Io::Client_socket_interface::task2, &socket_intrf);  // read
 
     io_thread.join();
     socket_thread.join();
+    // socket_thread1.join();
     socket_thread2.join();
 }

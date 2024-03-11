@@ -107,6 +107,7 @@ namespace Ui
         if (w->ShouldClose())
             return false;
 
+		p_robot_set->header = 0xEA;
         BeginDrawing();
         ClearBackground(Color{ 6, 0, 37, 255 });
 

@@ -27,7 +27,7 @@ namespace Types
 
     struct Robot_set
     {
-        uint8_t heaedr;
+        uint8_t header;
         /** chassis_control **/
         fp32 vx_set = 0.f;
         fp32 vy_set = 0.f;
