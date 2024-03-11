@@ -13,7 +13,9 @@ int main(int argc, char** argv) {
 
     std::thread io_thread(&Io::Io_handler::task, &io);
     std::thread socket_thread(&Io::Client_socket_interface::task, &socket_intrf);
+    std::thread socket_thread2(&Io::Client_socket_interface::task2, &socket_intrf);
 
     io_thread.join();
-	socket_thread.join();
+    socket_thread.join();
+    socket_thread2.join();
 }

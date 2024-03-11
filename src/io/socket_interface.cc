@@ -30,29 +30,35 @@ namespace Io
                 printf("ERROR writing to socket");
             }
 
+            printf("%d %s\n", 1, buffer);
+        }
+    }
+
+    void Client_socket_interface::task2() {
+        while (1) {
             bzero(buffer, 256);
-            n = read(sockfd, buffer, 255);
+            int n = read(sockfd, buffer, 255);
 
             if (n < 0) {
                 printf("ERROR reading from socket");
             }
 
-            printf("%d %s\n", i++, buffer);
+            printf("%d %s\n", 2, buffer);
         }
     }
 
     inline void Client_socket_interface::pack() {
         for (size_t i = 0; i < sizeof(Types::Robot_set); i++) {
-            //printf("%d\n", *((uint8_t *)p_robot_set.get() + i));
+            // printf("%d\n", *((uint8_t *)p_robot_set.get() + i));
             buffer[i] = *((uint8_t *)p_robot_set.get() + i);
         }
     }
 
     Client_socket_interface::Client_socket_interface(std::shared_ptr<Types::Robot_set> robot_set)
-        : port_num(51717),
-		  host_name("zzarch"),
-		  //host_name("192.168.123.150"),
-		  //host_name("192.168.123.82"),
+        : port_num(51718),
+          //host_name("zzarch"),
+		   host_name("192.168.123.110"),
+          // host_name("192.168.123.82"),
           p_robot_set(robot_set) {
     }
 

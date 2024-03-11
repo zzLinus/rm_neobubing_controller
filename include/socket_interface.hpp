@@ -21,6 +21,7 @@ namespace Io
         Client_socket_interface(std::shared_ptr<Types::Robot_set> robot_set);
         ~Client_socket_interface();
         void task();
+        void task2();
         inline void pack();
 
        private:
