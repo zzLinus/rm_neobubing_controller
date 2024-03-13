@@ -16,27 +16,27 @@ namespace Io
                 (const struct sockaddr *)&serv_addr,
                 sizeof(serv_addr));
             if (n > 0) {
-                printf("1 write to server\n");
+                // printf("1 write to server\n");
             }
         }
     }
 
-    //void Client_socket_interface::task1() {
-    //    while (1) {
-    //        bzero(buffer_w, 256);
-    //        pack();
-    //        int n = sendto(
-    //            sockfd,
-    //            (const char *)buffer_w,
-    //            sizeof(Types::Robot_set),
-    //            MSG_CONFIRM,
-    //            (const struct sockaddr *)&serv_addr,
-    //            sizeof(serv_addr));
-    //        if (n > 0) {
-    //            printf("2 write to server\n");
-    //        }
-    //    }
-    //}
+    // void Client_socket_interface::task1() {
+    //     while (1) {
+    //         bzero(buffer_w, 256);
+    //         pack();
+    //         int n = sendto(
+    //             sockfd,
+    //             (const char *)buffer_w,
+    //             sizeof(Types::Robot_set),
+    //             MSG_CONFIRM,
+    //             (const struct sockaddr *)&serv_addr,
+    //             sizeof(serv_addr));
+    //         if (n > 0) {
+    //             printf("2 write to server\n");
+    //         }
+    //     }
+    // }
 
     void Client_socket_interface::task2() {
         while (1) {
@@ -44,10 +44,10 @@ namespace Io
             socklen_t len = sizeof(serv_addr);
             int n = recvfrom(sockfd, buffer_r, 256, MSG_WAITALL, (struct sockaddr *)&serv_addr, &len);
             if (n > 0) {
-                printf("read from server\n");
+                // printf("read from server\n");
             }
 
-            printf("%d %s\n", 2, buffer_r);
+            // printf("%d %s\n", 2, buffer_r);
         }
     }
 

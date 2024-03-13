@@ -41,7 +41,7 @@ namespace Ui
 
     inline void raylib_ui::draw_motor_speed() {
         // NOTE: Draw Slidebar
-	GuiSliderBar((Rectangle){ 600, 200, 120, 20 }, "Max speed", NULL, &max_speed, 0, 2.5);
+        GuiSliderBar((Rectangle){ 600, 200, 120, 20 }, "Max speed", NULL, &max_speed, 0, 2.5);
 
         Vector2 center = { 280, 130 };
         float vx_per = (p_robot_set->vx_set / 2.5) * 360;
@@ -107,9 +107,21 @@ namespace Ui
         if (w->ShouldClose())
             return false;
 
-		p_robot_set->header = 0xEA;
+        p_robot_set->header = 0xEA;
         BeginDrawing();
         ClearBackground(Color{ 6, 0, 37, 255 });
+
+        Vector2 ballPosition;
+        ballPosition = GetMousePosition();
+        ballPosition.y = 400.0f;
+        ballPosition.x = std::clamp(ballPosition.x, 50.0f, 450.0f);
+        char s[256];
+        p_robot_set->yaw_set = -0.7 + ((ballPosition.x - 250) / 400) * M_PIf;
+        p_robot_set->mode = Types::ROBOT_MODE::ROBOT_FOLLOW_GIMBAL;
+
+        sprintf(s, "Mouse pos %f %f set yaw %f\n", ballPosition.x, ballPosition.y, p_robot_set->yaw_set);
+        textColor.DrawText(s, 10, 40, 20);
+        DrawCircleV(ballPosition, 20, RED);
 
         draw_menu();
         draw_motor_speed();
