@@ -6,6 +6,7 @@ namespace Io
 {
     void Client_socket_interface::task() {
         while (1) {
+            printf("send to\n");
             bzero(buffer, 256);
             pack();
             int n = sendto(
@@ -40,6 +41,7 @@ namespace Io
 
     void Client_socket_interface::task2() {
         while (1) {
+            printf("read from\n");
             bzero(buffer_r, 256);
             socklen_t len = sizeof(serv_addr);
             int n = recvfrom(sockfd, buffer_r, 256, MSG_WAITALL, (struct sockaddr *)&serv_addr, &len);
@@ -61,22 +63,18 @@ namespace Io
         : port_num(51718),
           // host_name("zzarch"),
           // host_name("192.168.123.110"),
-          host_name("192.168.123.82"),
+          host_name("192.168.123.110"),
           p_robot_set(robot_set) {
         sockfd = socket(AF_INET, SOCK_DGRAM, 0);
         if (sockfd < 0) {
             printf("ERROR opening socket");
         }
-        server = gethostbyname(host_name.c_str());
-        if (server == NULL) {
-            fprintf(stderr, "ERROR, no such host\n");
-            exit(0);
-        }
 
         serv_addr.sin_family = AF_INET;
         // bcopy((char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
-        serv_addr.sin_addr.s_addr = inet_addr("192.168.123.110");
-        serv_addr.sin_port = htons(port_num);
+        // serv_addr.sin_addr.s_addr = inet_addr("192.168.123.110");
+        serv_addr.sin_addr.s_addr = inet_addr("192.168.123.147");
+        serv_addr.sin_port = htons(51718);
     }
 
     Client_socket_interface::~Client_socket_interface() {

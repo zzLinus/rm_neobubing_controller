@@ -7,9 +7,11 @@ namespace Ui
         p_robot_set = robot_set;
         cur_speed_x = 0;
         cur_speed_y = 0;
-        screenW = 800;
-        screenH = 600;
+        screenW = 1000;
+        screenH = 800;
         textColor = raylib::Color(RED);
+		ballPosition.x = 250;
+		ballPosition.y = 400;
     }
 
     raylib_ui::~raylib_ui() {
@@ -107,16 +109,18 @@ namespace Ui
         if (w->ShouldClose())
             return false;
 
-        p_robot_set->header = 0xEA;
+        p_robot_set->header = 0x6A;
         BeginDrawing();
         ClearBackground(Color{ 6, 0, 37, 255 });
 
-        Vector2 ballPosition;
+		if(IsMouseButtonDown(MOUSE_BUTTON_LEFT))
         ballPosition = GetMousePosition();
-        ballPosition.y = 400.0f;
         ballPosition.x = std::clamp(ballPosition.x, 50.0f, 450.0f);
+        ballPosition.y = std::clamp(ballPosition.y, 200.0f, 600.0f);
+        DrawRectangleLines(50, 200, 400, 400, RED);
         char s[256];
-        p_robot_set->yaw_set = -0.7 + ((ballPosition.x - 250) / 400) * M_PIf;
+        p_robot_set->yaw_set = -0.7 - ((ballPosition.x - 250) / 400) * M_PIf;
+        p_robot_set->pitch_set = -((ballPosition.y - 400) / 400) * (M_PIf / 8);
         p_robot_set->mode = Types::ROBOT_MODE::ROBOT_FOLLOW_GIMBAL;
 
         sprintf(s, "Mouse pos %f %f set yaw %f\n", ballPosition.x, ballPosition.y, p_robot_set->yaw_set);

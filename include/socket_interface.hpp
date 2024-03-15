@@ -21,7 +21,7 @@ namespace Io
         Client_socket_interface(std::shared_ptr<Types::Robot_set> robot_set);
         ~Client_socket_interface();
         void task();   // send thread
-        //void task1();  // send thread
+		//void task1();  // send thread
         void task2();  // read thread
         inline void pack();
 
@@ -30,7 +30,7 @@ namespace Io
         sockaddr_in serv_addr, cli_addr;
         struct hostent *server;
         char buffer[256];
-        //char buffer_w[256];
+		char buffer_w[256];
         char buffer_r[256];
         std::string host_name;
         std::shared_ptr<Types::Robot_set> p_robot_set;

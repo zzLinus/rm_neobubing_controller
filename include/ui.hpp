@@ -34,6 +34,7 @@ namespace Ui
        private:
         std::shared_ptr<Types::Robot_set> p_robot_set;
         float max_speed = 2.5;
+        Vector2 ballPosition;
 
         fp32 cur_speed_x;
         fp32 cur_speed_y;
